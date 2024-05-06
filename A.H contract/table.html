@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <input type="text" id="city-input" placeholder="Enter a city name...">
+    <button onclick="getWeather(); return false">Get Weather</button>
+    <div id="weather"></div>
+
+    <script>
+        let apiKey = '3497b16f43504fe2b5892111240703';
+
+        function getWeather() {
+            let cityInput = document.getElementById('city-input');
+            let cityName = cityInput.value;
+            let url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${cityName}&aqi=yes`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    let weatherDiv = document.getElementById('weather');
+                    weatherDiv.innerHTML = `
+                        <h2>${location.name}</h2>
+                        <p>Region: ${location.region}</p>
+                        <p>Country: ${location.country}</p>
+                        <p>Temperature: ${current.temp_c}°C</p>
+                        <p>Feels like: ${current.feels_like_c}°C</p>
+                        <p>Humidity: ${current.humidity}%</p>
+                        <p>Wind speed: ${current.wind_mph} m/s</p>
+                    `;
+                })
+                .catch(error => {
+                 console.log('Error fetching weather data:', error);
+                });
+        }
+    </script>
+</body>
+</html>
